@@ -1,12 +1,350 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>halmanfaucet</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIMANN | Professional Faucet Manufacturer</title>
+    <!-- 高端商用字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@100;300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #bda27e;
+            --black: #000000;
+            --dark-surface: #0a0a0a;
+            --white: #ffffff;
+            --gray: #f8f8f8;
+            --transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: var(--white); 
+            color: #111;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- 顶级导航 --- */
+        header {
+            position: fixed; top: 0; width: 100%; height: 90px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5%; z-index: 1000; transition: var(--transition);
+        }
+        header.scrolled { background: rgba(0,0,0,0.95); height: 70px; color: #fff; }
+        .logo { font-family: 'Cinzel', serif; font-size: 28px; font-weight: 900; letter-spacing: 5px; }
+        
+        .nav-right { display: flex; align-items: center; gap: 40px; }
+        .lang-switch { display: flex; gap: 15px; font-size: 11px; font-weight: 800; }
+        .lang-switch span { cursor: pointer; opacity: 0.3; transition: 0.3s; }
+        .lang-switch span.active { opacity: 1; color: var(--gold); border-bottom: 1px solid var(--gold); }
+        
+        .btn-top { 
+            border: 1px solid var(--gold); padding: 10px 25px; font-size: 11px;
+            letter-spacing: 2px; background: transparent; cursor: pointer; color: var(--gold);
+        }
+
+        /* --- 场景 1: 沉浸式 Hero 视频 --- */
+        .scene-hero {
+            height: 100vh; position: relative; background: #000;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; text-align: center;
+        }
+        .hero-video { 
+            position: absolute; top:0; left:0; width:100%; height:100%; 
+            object-fit:cover; opacity: 0.6; pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 10; max-width: 900px; padding: 0 20px; }
+        .hero h1 { font-family: 'Cinzel', serif; font-size: clamp(40px, 8vw, 110px); margin-bottom: 20px; }
+        .hero p { letter-spacing: 12px; font-weight: 100; text-transform: uppercase; margin-bottom: 40px; }
+
+        /* --- 场景 2: 工业实力视差 --- */
+        .scene-factory {
+            position: relative; padding: 150px 0; background: var(--dark-surface); color: #fff;
+        }
+        .factory-parallax {
+            height: 80vh; margin-bottom: 80px; position: relative;
+            background: url('https://sc04.alicdn.com/kf/S37b207b9d9054c63950fa7ec39b0b2b4X.jpg') no-repeat center center fixed;
+            background-size: cover; display: flex; align-items: flex-end;
+        }
+        .parallax-overlay {
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(20px);
+            padding: 80px 5%; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+        }
+
+        /* --- 场景 3: 产品展厅 --- */
+        .scene-catalog { padding: 120px 5%; background: var(--white); }
+        .catalog-header { text-align: center; margin-bottom: 80px; }
+        .catalog-header h2 { font-family: 'Cinzel', serif; font-size: 42px; letter-spacing: 4px; }
+        
+        .tabs { display: flex; justify-content: center; gap: 40px; margin-bottom: 60px; border-bottom: 1px solid #eee; }
+        .tab-btn { 
+            padding: 20px 0; font-size: 12px; font-weight: 800; letter-spacing: 2px;
+            cursor: pointer; opacity: 0.3; transition: 0.3s;
+        }
+        .tab-btn.active { opacity: 1; color: var(--gold); border-bottom: 2px solid var(--gold); }
+
+        .p-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 50px; 
+        }
+        .p-card { 
+            text-align: center; transition: var(--transition); border-bottom: 1px solid #f0f0f0; padding-bottom: 40px;
+            cursor: pointer;
+        }
+        .p-card:hover { transform: translateY(-15px); }
+        .p-card img { width: 100%; height: 320px; object-fit: contain; margin-bottom: 30px; }
+        .p-card h3 { font-size: 16px; font-weight: 600; letter-spacing: 1px; }
+        .p-card .model { color: var(--gold); font-size: 12px; font-weight: bold; margin-bottom: 10px; display: block; }
+
+        /* --- 询盘表单 (内嵌全屏，100%可用) --- */
+        .inquiry-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--white); z-index: 2000; display: none; padding: 5%;
+            overflow-y: auto; animation: slideUp 0.6s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .close-form { position: fixed; top: 40px; right: 5%; font-size: 40px; cursor: pointer; z-index: 2100; }
+        
+        .form-box { max-width: 1000px; margin: 50px auto; display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; }
+        .form-info h2 { font-family: 'Cinzel', serif; font-size: 56px; margin-bottom: 30px; }
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+        input, textarea { 
+            width: 100%; padding: 20px 0; border: none; border-bottom: 1px solid #ddd;
+            font-family: inherit; font-size: 16px; outline: none; transition: 0.3s;
+        }
+        input:focus { border-bottom-color: var(--black); }
+        .btn-gold { 
+            background: var(--black); color: #fff; padding: 25px 80px; 
+            border: none; cursor: pointer; font-weight: 800; letter-spacing: 4px;
+        }
+        .btn-gold:hover { background: var(--gold); }
+
+        /* --- 悬浮快捷入口 --- */
+        .floating-tools { position: fixed; bottom: 40px; right: 40px; z-index: 1500; display: flex; flex-direction: column; gap: 15px; }
+        .f-icon { 
+            width: 60px; height: 60px; border-radius: 50%; display: flex; 
+            align-items: center; justify-content: center; color: #fff; font-size: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); cursor: pointer; transition: 0.3s;
+        }
+        .icon-mail { background: var(--black); }
+        .icon-wa { background: #25D366; }
+        .f-icon:hover { transform: translateY(-8px) scale(1.1); }
+
+        /* --- Footer --- */
+        footer { background: var(--black); color: #666; padding: 100px 5% 50px; text-align: center; }
+        footer .logo { color: #fff; margin-bottom: 40px; }
+
+        @media (max-width: 1024px) {
+            .parallax-overlay, .form-box { grid-template-columns: 1fr; gap: 40px; }
+            .hero h1 { font-size: 56px; }
+        }
+    </style>
 </head>
 <body>
-<h1>✅ Cloudflare Pages 部署测试成功</h1>
-<p>域名：halmanfaucet.com</p>
+
+    <header id="navbar">
+        <div class="logo">HIMANN</div>
+        <div class="nav-right">
+            <div class="lang-switch">
+                <span class="active" onclick="switchLang('en')">EN</span>
+                <span onclick="switchLang('zh')">CN</span>
+                <span onclick="switchLang('es')">ES</span>
+            </div>
+            <button class="btn-top" onclick="toggleForm(true)" id="t-nav-btn">INQUIRY</button>
+        </div>
+    </header>
+
+    <!-- Scene 1: Hero -->
+    <section class="scene-hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="生产全过程介绍视频.m4v" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <p id="t-hero-sub">Exquisite Craftsmanship Since 2005</p>
+            <h1 id="t-hero-h1">The Soul of Water</h1>
+            <button class="btn-gold" style="background:#fff; color:#000;" onclick="document.getElementById('catalog').scrollIntoView()" id="t-discover">DISCOVER MORE</button>
+        </div>
+    </section>
+
+    <!-- Scene 2: Factory Strength -->
+    <section class="scene-factory">
+        <div class="factory-parallax">
+            <div class="parallax-overlay">
+                <div>
+                    <h5 id="t-fac-sub" style="color:var(--gold); letter-spacing:4px; margin-bottom:20px;">OUR PRODUCTION</h5>
+                    <h3 id="t-fac-h2" style="font-family:'Cinzel'; font-size:36px;">26,000 m² Integrated Facility</h3>
+                </div>
+                <div>
+                    <p id="t-fac-p" style="opacity:0.8; line-height:2;">From lead-free brass gravity casting to 100% automated pressure testing, HIMANN redefines professional manufacturing standards for the modern world.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scene 3: Product Gallery -->
+    <section class="scene-catalog" id="catalog">
+        <div class="catalog-header">
+            <h2 id="t-cat-h2">The Curated Collection</h2>
+        </div>
+
+        <div class="tabs">
+            <div class="tab-btn active" onclick="filterItems('all', this)">ALL</div>
+            <div class="tab-btn" onclick="filterItems('kitchen', this)">KITCHEN</div>
+            <div class="tab-btn" onclick="filterItems('shower', this)">SHOWER</div>
+            <div class="tab-btn" onclick="filterItems('basin', this)">BASIN</div>
+            <div class="tab-btn" onclick="filterItems('valve', this)">VALVES</div>
+        </div>
+
+        <div class="p-grid" id="pGrid">
+            <!-- JS 填充数据 -->
+        </div>
+    </section>
+
+    <!-- 询盘表单 Overlay -->
+    <div class="inquiry-overlay" id="inquiryOverlay">
+        <span class="close-form" onclick="toggleForm(false)">&times;</span>
+        <div class="form-box">
+            <div class="form-info">
+                <h2 id="t-form-h2">Request Catalog</h2>
+                <p id="t-form-p">Get technical drawings and volume quotations within 12 hours from our dedicated office.</p>
+                <div style="margin-top:50px; font-weight:300;">
+                    <p>EMAIL: haimanfaucet@outlook.com</p>
+                    <p>WHATSAPP: +86 13600749947</p>
+                    <p>WECHAT: HaimanFaucet</p>
+                </div>
+            </div>
+            <div class="form-fields">
+                <div class="input-row">
+                    <input type="text" placeholder="FULL NAME">
+                    <input type="email" placeholder="EMAIL ADDRESS">
+                </div>
+                <div class="input-row">
+                    <input type="text" placeholder="COUNTRY">
+                    <input type="text" placeholder="COMPANY">
+                </div>
+                <textarea rows="5" placeholder="WHICH MODELS ARE YOU INTERESTED IN?"></textarea>
+                <button class="btn-gold" onclick="alert('Submission Success! We will reply via haimanfaucet@outlook.com')" id="t-form-btn">SEND REQUEST</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 悬浮工具栏 -->
+    <div class="floating-tools">
+        <div class="f-icon icon-mail" onclick="toggleForm(true)" title="Inquiry">✉</div>
+        <a href="https://wa.me/8613600749947" target="_blank" class="f-icon icon-wa" title="WhatsApp">☏</a>
+    </div>
+
+    <footer>
+        <div class="logo">HIMANN</div>
+        <p>© 2025 Quanzhou Haiman Sanitary Ware Co., Ltd. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // 1. 三语词库 (移除 2025 字样)
+        const i18n = {
+            en: {
+                nav_btn: "INQUIRY", hero_h1: "The Soul of Water", hero_sub: "Exquisite Craftsmanship Since 2005",
+                discover: "DISCOVER MORE", fac_sub: "OUR PRODUCTION", fac_h2: "26,000 m² Integrated Facility",
+                fac_p: "From lead-free brass gravity casting to 100% automated pressure testing.",
+                cat_h2: "The Curated Collection", form_h2: "Request Catalog",
+                form_p: "Get technical drawings and volume quotations in 12 hours.",
+                form_btn: "SEND REQUEST",
+                kitchen: "Kitchen Masterpiece", shower: "Shower Systems", basin: "Basin Mixers", valve: "Angle Valves"
+            },
+            zh: {
+                nav_btn: "索取报价", hero_h1: "水之灵魂", hero_sub: "始于 2005 年的精密工艺",
+                discover: "探索系列", fac_sub: "生产实力", fac_h2: "26,000 平米现代化基地",
+                fac_p: "从无铅铜重力铸造到 100% 自动试压检测，海镘为全球家庭定义工业标杆。",
+                cat_h2: "甄选选集", form_h2: "索取正式报价单",
+                form_p: "我们的专业团队将在 12 小时内为您提供技术图纸与批量报价。",
+                form_btn: "提交需求",
+                kitchen: "厨房龙头", shower: "淋浴系统", basin: "面盆龙头", valve: "精品角阀"
+            },
+            es: {
+                nav_btn: "CONSULTA", hero_h1: "El Alma del Agua", hero_sub: "Artesanía Exquisita Desde 2005",
+                discover: "DESCUBRE MÁS", fac_sub: "NUESTRA PRODUCCIÓN", fac_h2: "Fábrica de 26,000 m²",
+                fac_p: "Desde fundición de latón sin plomo hasta pruebas de presión automatizadas al 100%.",
+                cat_h2: "La Colección", form_h2: "Solicitar Catálogo",
+                form_p: "Obtenga dibujos técnicos y cotizaciones en 12 horas.",
+                form_btn: "ENVIAR SOLICITUD",
+                kitchen: "Serie de Cocina", shower: "Sistemas de Ducha", basin: "Mezcladores", valve: "Válvulas"
+            }
+        };
+
+        // 2. 丰富的产品阵列 (整合自 Excel)
+        const products = [
+            { id: '826006', cat: 'kitchen', name: 'Gunmetal Pull-out Mixer', img: 'https://www.haimanfaucets.com/uploads/202236798/small/gunmetal-pull-out-kitchen-tap48478560688.jpg' },
+            { id: '826019', cat: 'kitchen', name: 'Commercial Pull-down Tap', img: 'https://www.haimanfaucets.com/uploads/202236798/small/chrome-pull-down-kitchen-faucet17009069021.jpg' },
+            { id: '826033', cat: 'kitchen', name: 'Industrial Flexible Spout', img: 'https://www.haimanfaucets.com/uploads/202236798/small/single-hole-kitchen-mixer-tap34252154409.jpg' },
+            { id: '208001A', cat: 'shower', name: 'Thermo Rain System', img: 'https://www.haimanfaucets.com/uploads/202236798/small/black-thermostatic-mixer-shower30497825865.jpg' },
+            { id: '861301', cat: 'shower', name: 'Modern Round Shower', img: 'https://www.haimanfaucets.com/uploads/202236798/small/shower-faucet-set-with-handheld23329234446.jpg' },
+            { id: '861408', cat: 'shower', name: 'Smart Digital Panel', img: 'https://www.haimanfaucets.com/uploads/202236798/small/black-thermostatic-mixer-shower30497825865.jpg' },
+            { id: '811011', cat: 'basin', name: 'Classic Basin Mixer', img: 'https://www.haimanfaucets.com/uploads/202236798/small/brass-mixer-tap-bathroom47203771380.jpg' },
+            { id: '24060', cat: 'basin', name: 'Contactless Sensor Tap', img: 'https://www.haimanfaucets.com/uploads/202236798/small/sensor-faucet-for-wash-basin28402274881.jpg' },
+            { id: '811048', cat: 'basin', name: 'Artistic Rose Gold', img: 'https://www.haimanfaucets.com/uploads/202236798/small/side-lever-basin-tap20064330771.jpg' },
+            { id: '218003', cat: 'valve', name: 'SUS304 Angle Valve', img: 'https://www.haimanfaucets.com/m409/icon_gotop.webp' },
+            { id: '881301', cat: 'valve', name: 'Laundry Special Valve', img: 'https://www.haimanfaucets.com/m409/icon_gotop.webp' },
+            { id: '28103', cat: 'valve', name: 'High-Pressure Valve', img: 'https://www.haimanfaucets.com/m409/icon_gotop.webp' }
+        ];
+
+        let lang = 'en';
+
+        function switchLang(l) {
+            lang = l;
+            document.querySelectorAll('.lang-switch span').forEach(s => s.classList.remove('active'));
+            event.target.classList.add('active');
+            updateContent();
+        }
+
+        function updateContent() {
+            const t = i18n[lang];
+            document.getElementById('t-nav-btn').innerText = t.nav_btn;
+            document.getElementById('t-hero-h1').innerText = t.hero_h1;
+            document.getElementById('t-hero-sub').innerText = t.hero_sub;
+            document.getElementById('t-discover').innerText = t.discover;
+            document.getElementById('t-fac-sub').innerText = t.fac_sub;
+            document.getElementById('t-fac-h2').innerText = t.fac_h2;
+            document.getElementById('t-fac-p').innerText = t.fac_p;
+            document.getElementById('t-cat-h2').innerText = t.cat_h2;
+            document.getElementById('t-form-h2').innerText = t.form_h2;
+            document.getElementById('t-form-p').innerText = t.form_p;
+            document.getElementById('t-form-btn').innerText = t.form_btn;
+            
+            filterItems('all', document.querySelector('.tab-btn'));
+        }
+
+        function filterItems(cat, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filtered = cat === 'all' ? products : products.filter(p => p.cat === cat);
+            const grid = document.getElementById('pGrid');
+            const t = i18n[lang];
+            
+            grid.innerHTML = filtered.map(p => `
+                <div class="p-card" onclick="toggleForm(true)">
+                    <span class="model">MODEL: #${p.id}</span>
+                    <img src="${p.img}">
+                    <p style="color:var(--gold); font-size:11px; font-weight:800; letter-spacing:2px; margin-bottom:10px;">${t[p.cat]}</p>
+                    <h3>${p.name}</h3>
+                </div>
+            `).join('');
+        }
+
+        function toggleForm(show) {
+            const overlay = document.getElementById('inquiryOverlay');
+            overlay.style.display = show ? 'block' : 'none';
+            document.body.style.overflow = show ? 'hidden' : 'auto';
+        }
+
+        window.onscroll = function() {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 100) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        };
+
+        updateContent();
+    </script>
 </body>
 </html>
