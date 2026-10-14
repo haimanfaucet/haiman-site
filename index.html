@@ -201,6 +201,18 @@
         }
         .btn-submit-main:hover { background: var(--accent); transform: scale(1.02); }
 
+        .sent-notice {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
+            background: #12261a; color: #fff; border-bottom: 3px solid var(--accent);
+            padding: 18px 24px; display: flex; flex-direction: column; gap: 4px;
+            align-items: center; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+            animation: slideDown .45s ease both;
+        }
+        .sent-notice strong { font-family: 'Oswald', sans-serif; font-size: 17px; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
+        .sent-notice span { font-size: 13px; color: #cfd8d2; letter-spacing: .5px; }
+        @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @media (max-width: 1024px) { .sent-notice { padding: 14px 16px; } .sent-notice strong { font-size: 14px; } .sent-notice span { font-size: 12px; } }
+
         .sticky-tools { position: fixed; bottom: 40px; right: 40px; z-index: 1500; display: flex; flex-direction: column; gap: 15px; }
         .t-icon { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 26px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); cursor: pointer; transition: 0.3s; text-decoration: none; }
         .t-icon:hover { transform: translateY(-8px); }
@@ -349,16 +361,21 @@
         <div class="inquiry-form-container">
             <h2 id="t-msg-h2">LEAVE YOUR MESSAGE</h2>
             <p id="t-msg-p" style="color:var(--text-gray); margin-top:20px;">Contact us for formal quotations and technical resources.</p>
-            <div class="inquiry-form">
+            <form class="inquiry-form" action="https://formsubmit.co/sales@haimanfaucet.com" method="POST">
                 <div class="form-grid">
-                    <input type="text" id="f-name" placeholder="NAME">
-                    <input type="email" id="f-email" placeholder="EMAIL">
-                    <input type="text" id="f-company" placeholder="COMPANY">
-                    <input type="text" id="f-phone" placeholder="WHATSAPP / PHONE">
-                    <textarea rows="6" id="f-msg" placeholder="MODELS & QUANTITY"></textarea>
-                    <button class="btn-submit-main" onclick="submitInquiry()" id="t-msg-btn">SEND MESSAGE</button>
+                    <input type="text" name="Name" id="f-name" placeholder="NAME" required>
+                    <input type="email" name="Email" id="f-email" placeholder="EMAIL" required>
+                    <input type="text" name="Company" id="f-company" placeholder="COMPANY">
+                    <input type="text" name="Phone" id="f-phone" placeholder="WHATSAPP / PHONE">
+                    <textarea rows="6" name="Requirement" id="f-msg" placeholder="MODELS & QUANTITY" required></textarea>
+                    <input type="hidden" name="_subject" value="New Inquiry from haimanfaucet.com">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://haimanfaucet.com/?inquiry=sent">
+                    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+                    <button class="btn-submit-main" type="submit" id="t-msg-btn">SEND MESSAGE</button>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
 
@@ -394,7 +411,8 @@
                 global_h2: "Global Partnership Network", global_p: "Currently serving professional distributors in over 50 countries.",
                 faq_h2: "FAQ",
                 msg_h2: "LEAVE YOUR MESSAGE", msg_p: "Contact us for formal quotations and technical resources.", msg_btn: "SEND MESSAGE",
-                kitchen: "Kitchen Collection", shower: "Shower Systems", basin: "Basin Mixers", valve: "Valves & Hardware"
+                kitchen: "Kitchen Collection", shower: "Shower Systems", basin: "Basin Mixers", valve: "Valves & Hardware",
+                sent_title: "Inquiry Sent", sent_body: "Thank you. Our export office will reply with drawings and a quotation within 12 hours."
             },
             zh: {
                 nav_hot: "热销排行", nav_rec: "精品推荐", nav_factory: "生产基地", nav_faq: "常见问题", quote_btn: "在线询盘",
@@ -407,7 +425,8 @@
                 global_h2: "全球供应合作伙伴", global_p: "目前为全球50多个国家的专业经销商和工程项目提供服务。",
                 faq_h2: "常见问题",
                 msg_h2: "在线留言询盘", msg_p: "联系我们获取正式报价单和最新技术手册。", msg_btn: "提交询盘",
-                kitchen: "厨房系列", shower: "恒温淋浴", basin: "面盆系列", valve: "阀门五金"
+                kitchen: "厨房系列", shower: "恒温淋浴", basin: "面盆系列", valve: "阀门五金",
+                sent_title: "询盘已提交", sent_body: "感谢您的来信，我们的外贸部将在 12 小时内回复图纸与报价。"
             },
             es: {
                 nav_hot: "Más Vendidos", nav_rec: "Recomendado", nav_factory: "Fábrica", nav_faq: "FAQ", quote_btn: "CONSULTA",
@@ -420,7 +439,8 @@
                 global_h2: "Red de Asociación Global", global_p: "Sirviendo a distribuidores profesionales en más de 50 países.",
                 faq_h2: "Preguntas Frecuentes",
                 msg_h2: "DÉJANOS TU MENSAJE", msg_p: "Contáctenos para cotizaciones formales y recursos técnicos.", msg_btn: "ENVIAR MENSAJE",
-                kitchen: "Serie Cocina", shower: "Sistemas Ducha", basin: "Mezcladores", valve: "Válvulas"
+                kitchen: "Serie Cocina", shower: "Sistemas Ducha", basin: "Mezcladores", valve: "Válvulas",
+                sent_title: "Consulta Enviada", sent_body: "Gracias. Nuestra oficina de exportación responderá con planos y cotización en 12 horas."
             }
         };
 
@@ -472,6 +492,7 @@
             }
             renderGrid('all');
             renderRecs();
+            renderSentNotice();
         }
 
         function renderGrid(cat) {
@@ -510,15 +531,23 @@
             renderGrid(cat);
         }
 
-        function submitInquiry() {
-            const name = document.getElementById('f-name').value;
-            const email = document.getElementById('f-email').value;
-            const company = document.getElementById('f-company').value;
-            const phone = document.getElementById('f-phone').value;
-            const msg = document.getElementById('f-msg').value;
-            const subject = encodeURIComponent('Inquiry from ' + (name || 'website visitor') + (company ? ' / ' + company : ''));
-            const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nCompany: ' + company + '\nWhatsApp/Phone: ' + phone + '\n\nRequirement:\n' + msg);
-            window.location.href = 'mailto:sales@haimanfaucet.com?subject=' + subject + '&body=' + body;
+        let sentNoticeEl = null;
+
+        function renderSentNotice() {
+            if (!sentNoticeEl) return;
+            const t = i18n[currentLang] || i18n.en;
+            sentNoticeEl.innerHTML = '<strong>' + t.sent_title + '</strong><span>' + t.sent_body + '</span>';
+        }
+
+        function showSentNotice() {
+            if (new URLSearchParams(window.location.search).get('inquiry') !== 'sent') return;
+            sentNoticeEl = document.createElement('div');
+            sentNoticeEl.className = 'sent-notice';
+            sentNoticeEl.setAttribute('role', 'status');
+            document.body.appendChild(sentNoticeEl);
+            renderSentNotice();
+            history.replaceState(null, '', window.location.pathname);
+            document.getElementById('inquiry').scrollIntoView();
         }
 
         window.onscroll = function() {
@@ -528,6 +557,7 @@
         };
 
         updateContent();
+        showSentNotice();
     </script>
 </body>
 </html>
