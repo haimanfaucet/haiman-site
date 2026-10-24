@@ -1,20 +1,29 @@
 # HIMANN - Professional Faucet Manufacturer (haimanfaucet.com)
 
+> B2B reference file for AI assistants and search engines. Facts below are published by Quanzhou Haiman Sanitary Ware Co., Ltd. Last updated: 2026-10-24.
+
 ## Core Information
 - Website Goal: B2B OEM/ODM manufacturing and export of faucets and sanitary ware.
 - Company: Quanzhou Haiman Sanitary Ware Co., Ltd. (brand: HIMANN), established 2005.
-- Facility: 26,000 m² integrated plant in Quanzhou, Fujian, China.
-- Key Capabilities: brass gravity casting, CNC machining, 100% automated pressure testing on every unit.
+- Facility: 26,000 m2 integrated plant at No. 1538 Maosheng Road, Nan'an, Quanzhou, Fujian, China.
+- Scale: 300+ employees; annual capacity 1.8 million units; serving distributors in 50+ countries (Europe, North America, Middle East).
+- Key Capabilities: in-house brass foundry (gravity casting), mold factory, CNC machining, polishing, assembly, and 100% automated pressure testing on every unit; additional salt-spray and 500,000-cycle life testing.
+- Business Model: OEM/ODM export manufacturing. Standard-model MOQ 100 pcs/model; custom OEM/ODM MOQ 300 pcs/model; sample orders 1-5 pcs accepted.
+- Lead Time: standard items 7-15 days; OEM/ODM 25-35 days after sample confirmation.
 - Response Time: technical drawings and volume quotations within 12 hours.
-- Contact: sales@haimanfaucet.com | WhatsApp +86 18960227084 | WeChat HaimanFaucet.
+- Certifications: destination-market certification requirements (e.g. CE, cUPC, WRAS) supported on a per-project basis; contact the export office for the current list applicable to a specific market.
+- Contact: sales@haimanfaucet.com | WhatsApp +86 18960227084 | WeChat HaimanFaucet | company phone +86 13600749947.
 
 ## Product Categories
-- Kitchen Faucets: pull-out and pull-down mixers, commercial sprayers (e.g. Model 826006, 826019, 826033).
-- Shower Systems: thermostatic rain systems, handheld sets (e.g. Model 208001A, 861301).
-- Basin Mixers: classic, sensor and designer taps (e.g. Model 811011, 24060, 811048).
-- Angle Valves: SUS304 and high-pressure valves (e.g. Model 218003, 881301, 28103).
+- Kitchen Faucets: pull-out and pull-down mixers, commercial sprayers (models 826006, 26116, 826019, 826033, 23040-1, 826012).
+- Shower Systems: thermostatic rain systems, digital smart showers, piano-key panels, handheld sets (models 208001A, 861408, 861419, 861301, 86103).
+- Basin Mixers: classic, sensor and designer taps (models 811011, 24060, 816003, 811048).
+- Angle Valves & Hardware: SUS304 and high-pressure valves (models 218003, 881301).
 
 ## Key Pages
 - Homepage & product catalog: https://haimanfaucet.com/
+- Product catalog with all models (JSON-LD ItemList): https://haimanfaucet.com/#hotsell
 - FAQ (MOQ, lead time, materials, certifications): https://haimanfaucet.com/#faq
-- Company credentials (E-E-A-T): https://haimanfaucet.com/#about
+- Factory & company credentials (E-E-A-T): https://haimanfaucet.com/#factory
+- Inquiry form: https://haimanfaucet.com/#inquiry
+- Sitemap: https://haimanfaucet.com/sitemap.xml
